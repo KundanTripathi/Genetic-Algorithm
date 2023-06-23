@@ -25,7 +25,7 @@ class Individual:
         self.gene = [Solution_sequence1,Solution_sequence2]
         
         
-    # calculate fitness value by increasing fitness value by when it matches any digit
+    # calculate fitness value by increasing fitness value by calculating cost and applying penalty
     def get_fitness(self):
         fitness = sum(list(np.multiply(np.multiply(self.gene[0],self.gene[1]),Cost))) + self.penalty() 
         return fitness
