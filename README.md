@@ -14,7 +14,7 @@ integer variable
 x(i,j);
 
 binary variable
-u(i,j)
+u(i,j);
 
 
 variable
