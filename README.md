@@ -6,6 +6,7 @@ Trying to solve Combinatorial optimization which can be solved using solver in G
 
 set
 i /f1*f5/
+
 j /s1*s10/;
 
 
