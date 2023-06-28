@@ -25,18 +25,19 @@ class Individual:
         self.gene = [Solution_sequence1,Solution_sequence2]
         
         
-    # calculate fitness value by increasing fitness value by calculating cost and applying penalty
+    # calculate fitness value by increasing fitness value by when it matches any digit
     def get_fitness(self):
         fitness = sum(list(np.multiply(np.multiply(self.gene[0],self.gene[1]),Cost))) + self.penalty() 
         return fitness
     
     def penalty(self):
         self.gene = self.gene
-        for i in [0,2,4]:
-            if self.gene[1][i]+self.gene[1][i+1] != 1 or sum(list(np.multiply(self.gene[0],self.gene[1]))) != 60:
-                return 1000
-            else:
-                return 0
+        count_p = 0
+        for i in range(3):
+            if (self.gene[1][2*i]+self.gene[1][(2*i)+1]) != 1 or sum(list(np.multiply(self.gene[0],self.gene[1]))) != 60:
+                count_p += 1000
+            
+        return count_p
          
     def __repr__(self):
         return ''.join(str(genes)+ " " for genes in np.hstack((["gene[0]"],self.gene[0],["|"],["gene[1]"],self.gene[1])))
@@ -72,24 +73,42 @@ class Population:
         
 class GeneticAlgorithm:
         
-    def __init__(self, population_size=200, crossover_rate = 0.65, mutation_rate = 0.4):
+    def __init__(self, population_size=200, crossover_rate = 0.65, mutation_rate = 0.3):
         self.population_size = population_size
         self.crossover_rate = crossover_rate
         self.mutation_rate = mutation_rate
         
     def run(self):
         pop = Population(self.population_size)
+        generation_count = [] 
+        fittest_ind = []
         fitness_value = []
+        
+        result = np.empty((0,3))
         
         
         for generation_counter in range(200):
             print('Generation %s - fittest is : %s with fitness value %s' % (generation_counter, pop.get_fittest(), pop.get_fittest().get_fitness()))
+#            generation_count.append(generation_counter)
+#            fittest_ind.append(str(pop.get_fittest()))
+#            fitness_value.append(pop.get_fittest().get_fitness())
+            
+            result = np.append(result, np.array([[generation_counter, str(pop.get_fittest()), int(pop.get_fittest().get_fitness())]]),axis=0)
             pop = self.evolve_population(pop)
-            fitness_value.append(pop.get_fittest().get_fitness())
-        print(sorted(fitness_value))
+            
+        idx = result[:,2].argsort()
+        arr = result[idx]
+            
+#        generation_count_new = [generation_count[i] for i in idx]
+#        fittest_ind_new = [fittest_ind[i] for i in idx]
+#        fitness_value_new = [fitness_value[i] for i in idx]
+        
+#        arr = np.array(list(zip(generation_count_new,fittest_ind_new,fitness_value_new)))
+
+        print(arr)
             
        # print("solution found ...") 
-        print(pop.get_fittest())
+        print(arr[0,:])
         
     def evolve_population(self, population):
         next_population = Population(self.population_size)
