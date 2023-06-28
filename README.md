@@ -98,4 +98,4 @@ sup.Optcr = 0.02;
 solve sup using mip minimization z;
 
 
-Metaheuristic takes more time hence reduced the problem to 6 chromosome length and used mutation and didn't use crossover to satisfy the constraints of demand. Instead used tornament selection to seect fittest gene for mutation with mutation probability cutt-off = 0.3.
+Metaheuristic takes more time hence reduced the problem to 6 chromosome length and used mutation and didn't use crossover to satisfy the constraints of demand. Instead used tournament selection to seect fittest gene for mutation with mutation probability cutt-off = 0.3.
